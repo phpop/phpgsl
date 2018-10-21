@@ -187,12 +187,149 @@ PHP_FUNCTION(gsl_frexp)
 }
 /* }}} */
 
+/* {{{ double gsl_pow_int(double x, int n)
+ */
+PHP_FUNCTION(gsl_pow_int)
+{
+	double x;
+	long n;
 
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+	Z_PARAM_DOUBLE(x)
+	Z_PARAM_LONG(n)
+	ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
 
+	RETURN_DOUBLE(gsl_pow_int(x, n));
+}
+/* }}} */
 
+/* {{{ double gsl_pow_2(const double x)
+ */
+PHP_FUNCTION(gsl_pow_2)
+{
+	double x;
 
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_DOUBLE(x)
+	ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
 
+	RETURN_DOUBLE(gsl_pow_2(x));
+}
+/* }}} */
 
+/* {{{ double gsl_pow_3(const double x)
+ */
+PHP_FUNCTION(gsl_pow_3)
+{
+	double x;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_DOUBLE(x)
+	ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
+
+	RETURN_DOUBLE(gsl_pow_3(x));
+}
+/* }}} */
+
+/* {{{ double gsl_pow_4(const double x)
+ */
+PHP_FUNCTION(gsl_pow_4)
+{
+	double x;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_DOUBLE(x)
+	ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
+
+	RETURN_DOUBLE(gsl_pow_4(x));
+}
+/* }}} */
+
+/* {{{ double gsl_pow_5(const double x)
+ */
+PHP_FUNCTION(gsl_pow_5)
+{
+	double x;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_DOUBLE(x)
+	ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
+
+	RETURN_DOUBLE(gsl_pow_5(x));
+}
+/* }}} */
+
+/* {{{ double gsl_pow_6(const double x)
+ */
+PHP_FUNCTION(gsl_pow_6)
+{
+	double x;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_DOUBLE(x)
+	ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
+
+	RETURN_DOUBLE(gsl_pow_6(x));
+}
+/* }}} */
+
+/* {{{ double gsl_pow_7(const double x)
+ */
+PHP_FUNCTION(gsl_pow_7)
+{
+	double x;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_DOUBLE(x)
+	ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
+
+	RETURN_DOUBLE(gsl_pow_7(x));
+}
+/* }}} */
+
+/* {{{ double gsl_pow_8(const double x)
+ */
+PHP_FUNCTION(gsl_pow_8)
+{
+	double x;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_DOUBLE(x)
+	ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
+
+	RETURN_DOUBLE(gsl_pow_8(x));
+}
+/* }}} */
+
+/* {{{ double gsl_pow_9(const double x)
+ */
+PHP_FUNCTION(gsl_pow_9)
+{
+	double x;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_DOUBLE(x)
+	ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
+
+	RETURN_DOUBLE(gsl_pow_9(x));
+}
+/* }}} */
+
+/* {{{ int gsl_fcmp(double x, double y, double epsilon)
+ */
+PHP_FUNCTION(gsl_fcmp)
+{
+	double x, y, eps;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+	Z_PARAM_DOUBLE(x)
+	Z_PARAM_DOUBLE(y)
+	Z_PARAM_DOUBLE(eps)
+	ZEND_PARSE_PARAMETERS_END_EX(RETURN_FALSE);
+
+	RETURN_LONG(gsl_fcmp(x, y, eps));
+}
+/* }}} */
 
 /* {{{ PHP_RINIT_FUNCTION
  */
@@ -270,6 +407,21 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_gsl_frexp, 0, 0, 2)
 	ZEND_ARG_INFO(0, x)
 	ZEND_ARG_INFO(0, e)
 ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_gsl_pow_int, 0, 0, 2)
+	ZEND_ARG_INFO(0, x)
+	ZEND_ARG_INFO(0, n)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_gsl_pow, 0, 0, 1)
+	ZEND_ARG_INFO(0, x)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_gsl_fcmp, 0, 0, 3)
+	ZEND_ARG_INFO(0, x)
+	ZEND_ARG_INFO(0, y)
+	ZEND_ARG_INFO(0, eps)
+ZEND_END_ARG_INFO()
 /* }}} */
 
 /* {{{ gsl_functions[]
@@ -287,6 +439,16 @@ static const zend_function_entry gsl_functions[] = {
 	PHP_FE(gsl_atanh,		arginfo_gsl_atanh)
 	PHP_FE(gsl_ldexp,		arginfo_gsl_ldexp)
 	PHP_FE(gsl_frexp,		arginfo_gsl_frexp)
+	PHP_FE(gsl_pow_int,		arginfo_gsl_pow_int)
+	PHP_FE(gsl_pow_2,		arginfo_gsl_pow)
+	PHP_FE(gsl_pow_3,		arginfo_gsl_pow)
+	PHP_FE(gsl_pow_4,		arginfo_gsl_pow)
+	PHP_FE(gsl_pow_5,		arginfo_gsl_pow)
+	PHP_FE(gsl_pow_6,		arginfo_gsl_pow)
+	PHP_FE(gsl_pow_7,		arginfo_gsl_pow)
+	PHP_FE(gsl_pow_8,		arginfo_gsl_pow)
+	PHP_FE(gsl_pow_9,		arginfo_gsl_pow)
+	PHP_FE(gsl_fcmp,		arginfo_gsl_fcmp)
 	PHP_FE_END
 };
 /* }}} */
