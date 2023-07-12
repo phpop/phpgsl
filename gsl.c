@@ -1,5 +1,3 @@
-/* gsl extension for PHP */
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
@@ -7,7 +5,15 @@
 #include "php.h"
 #include "ext/standard/info.h"
 #include "php_gsl.h"
+
 #include <gsl/gsl_math.h>
+
+/* For compatibility with older PHP versions */
+#ifndef ZEND_PARSE_PARAMETERS_NONE
+#define ZEND_PARSE_PARAMETERS_NONE() \
+	ZEND_PARSE_PARAMETERS_START(0, 0) \
+	ZEND_PARSE_PARAMETERS_END()
+#endif
 
 /* {{{ int gsl_isnan(const double x)
  */
@@ -331,28 +337,6 @@ PHP_FUNCTION(gsl_fcmp)
 }
 /* }}} */
 
-/* {{{ PHP_RINIT_FUNCTION
- */
-PHP_RINIT_FUNCTION(gsl)
-{
-#if defined(ZTS) && defined(COMPILE_DL_GSL)
-	ZEND_TSRMLS_CACHE_UPDATE();
-#endif
-
-	return SUCCESS;
-}
-/* }}} */
-
-/* {{{ PHP_MINFO_FUNCTION
- */
-PHP_MINFO_FUNCTION(gsl)
-{
-	php_info_print_table_start();
-	php_info_print_table_header(2, "gsl support", "enabled");
-	php_info_print_table_end();
-}
-/* }}} */
-
 /* {{{ arginfo
  */
 ZEND_BEGIN_ARG_INFO_EX(arginfo_gsl_isnan, 0, 0, 1)
@@ -453,6 +437,28 @@ static const zend_function_entry gsl_functions[] = {
 };
 /* }}} */
 
+/* {{{ PHP_RINIT_FUNCTION
+ */
+PHP_RINIT_FUNCTION(gsl)
+{
+#if defined(ZTS) && defined(COMPILE_DL_GSL)
+	ZEND_TSRMLS_CACHE_UPDATE();
+#endif
+
+	return SUCCESS;
+}
+/* }}} */
+
+/* {{{ PHP_MINFO_FUNCTION
+ */
+PHP_MINFO_FUNCTION(gsl)
+{
+	php_info_print_table_start();
+	php_info_print_table_header(2, "gsl support", "enabled");
+	php_info_print_table_end();
+}
+/* }}} */
+
 /* {{{ gsl_module_entry
  */
 zend_module_entry gsl_module_entry = {
@@ -475,4 +481,3 @@ ZEND_TSRMLS_CACHE_DEFINE()
 # endif
 ZEND_GET_MODULE(gsl)
 #endif
-
