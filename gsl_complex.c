@@ -5,6 +5,7 @@
 #include "php.h"
 #include "ext/standard/info.h"
 #include "php_gsl.h"
+#include "gsl_complex.h"
 
 #include <gsl/gsl_complex.h>
 
