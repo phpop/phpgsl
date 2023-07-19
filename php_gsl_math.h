@@ -1,12 +1,12 @@
-/* gsl extension for PHP */
+/* gsl_math extension for PHP */
 
-#ifndef PHP_GSL_H
-#define PHP_GSL_H
+#ifndef PHP_GSL_MATH_H
+#define PHP_GSL_MATH_H
 
-extern zend_module_entry gsl_module_entry;
-#define phpext_gsl_ptr &gsl_module_entry
+extern zend_module_entry gsl_math_module_entry;
+#define phpext_gsl_math_ptr &gsl_math_module_entry
 
-#define PHP_GSL_VERSION "0.0.1"
+#define PHP_GSL_MATH_VERSION "0.0.1"
 
 PHP_FUNCTION(gsl_isnan);
 PHP_FUNCTION(gsl_isinf);
@@ -31,8 +31,8 @@ PHP_FUNCTION(gsl_pow_8);
 PHP_FUNCTION(gsl_pow_9);
 PHP_FUNCTION(gsl_fcmp);
 
-# if defined(ZTS) && defined(COMPILE_DL_GSL)
+# if defined(ZTS) && defined(COMPILE_DL_GSL_MATH)
 ZEND_TSRMLS_CACHE_EXTERN()
 # endif
 
-#endif	/* PHP_GSL_H */
+#endif	/* PHP_GSL_MATH_H */
