@@ -25,7 +25,7 @@
 	zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), real);	\
 	zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), imag);	\
 } while (0)
-	
+
 #define RETURN_GSL_COMPLEX(z) RETVAL_GSL_COMPLEX(z); return
 
 // Возвращает gsl_complex из массива [x, iy]
@@ -34,32 +34,32 @@ static gsl_complex gslphp_get_zval_complex(zval *z) {
 	double x = 0.0, y = 0.0;
 	zval *zp;
 	zend_array *zarr;
-	
+
 	zarr = Z_ARRVAL_P(z);
-	
+
 	zp = zend_hash_index_find(zarr, 0); // нулевой элемент - действительная часть
 	if (zp != NULL) {
 		// Если есть нулевой элемент то приводим его к double
 		switch (Z_TYPE_INFO_P(zp)) {
-			case IS_DOUBLE: 
+			case IS_DOUBLE:
 				x = Z_DVAL_P(zp);
 				break;
-			case IS_LONG: 
+			case IS_LONG:
 				x = (double)Z_LVAL_P(zp);
 				break;
 			default:
 				x = 0.0;
 		}
 	}
-	
+
 	zp = zend_hash_index_find(zarr, 1); // первый элемент - мнимая часть
 	if (zp != NULL) {
 		// Если есть первый элемент то приводим его к double
 		switch (Z_TYPE_INFO_P(zp)) {
-			case IS_DOUBLE: 
+			case IS_DOUBLE:
 				y = Z_DVAL_P(zp);
 				break;
-			case IS_LONG: 
+			case IS_LONG:
 				y = (double)Z_LVAL_P(zp);
 				break;
 			default:
@@ -84,7 +84,7 @@ PHP_FUNCTION(gsl_real)
 	ZEND_PARSE_PARAMETERS_END();
 
 	val = gslphp_get_zval_complex(z);
-	
+
 	RETURN_DOUBLE(GSL_REAL(val));
 }
 /* }}} */
@@ -101,7 +101,7 @@ PHP_FUNCTION(gsl_imag)
 	ZEND_PARSE_PARAMETERS_END();
 
 	val = gslphp_get_zval_complex(z);
-	
+
 	RETURN_DOUBLE(GSL_IMAG(val));
 }
 /* }}} */
@@ -116,7 +116,7 @@ PHP_FUNCTION(gsl_complex_rect)
 		Z_PARAM_DOUBLE(x)
 		Z_PARAM_DOUBLE(y)
 	ZEND_PARSE_PARAMETERS_END();
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_rect(x, y));
 }
 /* }}} */
@@ -131,7 +131,7 @@ PHP_FUNCTION(gsl_complex_polar)
 		Z_PARAM_DOUBLE(r)
 		Z_PARAM_DOUBLE(theta)
 	ZEND_PARSE_PARAMETERS_END();
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_polar(r, theta));
 }
 /* }}}*/
@@ -148,7 +148,7 @@ PHP_FUNCTION(gsl_complex_arg)
 	ZEND_PARSE_PARAMETERS_END();
 
 	val = gslphp_get_zval_complex(z);
-	
+
 	RETURN_DOUBLE(gsl_complex_arg(val));
 }
 /* }}} */
@@ -165,7 +165,7 @@ PHP_FUNCTION(gsl_complex_abs)
 	ZEND_PARSE_PARAMETERS_END();
 
 	val = gslphp_get_zval_complex(z);
-	
+
 	RETURN_DOUBLE(gsl_complex_abs(val));
 }
 /* }}} */
@@ -182,7 +182,7 @@ PHP_FUNCTION(gsl_complex_abs2)
 	ZEND_PARSE_PARAMETERS_END();
 
 	val = gslphp_get_zval_complex(z);
-	
+
 	RETURN_DOUBLE(gsl_complex_abs2(val));
 }
 /* }}} */
@@ -199,7 +199,7 @@ PHP_FUNCTION(gsl_complex_logabs)
 	ZEND_PARSE_PARAMETERS_END();
 
 	val = gslphp_get_zval_complex(z);
-	
+
 	RETURN_DOUBLE(gsl_complex_logabs(val));
 }
 /* }}} */
@@ -218,7 +218,7 @@ PHP_FUNCTION(gsl_complex_add)
 
 	complex_a = gslphp_get_zval_complex(a);
 	complex_b = gslphp_get_zval_complex(b);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_add(complex_a, complex_b));
 }
 /* }}} */
@@ -237,7 +237,7 @@ PHP_FUNCTION(gsl_complex_sub)
 
 	complex_a = gslphp_get_zval_complex(a);
 	complex_b = gslphp_get_zval_complex(b);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_sub(complex_a, complex_b));
 }
 /* }}} */
@@ -256,7 +256,7 @@ PHP_FUNCTION(gsl_complex_mul)
 
 	complex_a = gslphp_get_zval_complex(a);
 	complex_b = gslphp_get_zval_complex(b);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_mul(complex_a, complex_b));
 }
 /* }}} */
@@ -275,7 +275,7 @@ PHP_FUNCTION(gsl_complex_div)
 
 	complex_a = gslphp_get_zval_complex(a);
 	complex_b = gslphp_get_zval_complex(b);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_div(complex_a, complex_b));
 }
 /* }}} */
@@ -294,7 +294,7 @@ PHP_FUNCTION(gsl_complex_add_real)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_add_real(complex_z, x));
 }
 /* }}} */
@@ -313,7 +313,7 @@ PHP_FUNCTION(gsl_complex_sub_real)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_sub_real(complex_z, x));
 }
 /* }}} */
@@ -332,7 +332,7 @@ PHP_FUNCTION(gsl_complex_mul_real)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_mul_real(complex_z, x));
 }
 /* }}} */
@@ -351,7 +351,7 @@ PHP_FUNCTION(gsl_complex_div_real)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_div_real(complex_z, x));
 }
 /* }}} */
@@ -370,7 +370,7 @@ PHP_FUNCTION(gsl_complex_add_imag)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_add_imag(complex_z, y));
 }
 /* }}} */
@@ -389,7 +389,7 @@ PHP_FUNCTION(gsl_complex_sub_imag)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_sub_imag(complex_z, y));
 }
 /* }}} */
@@ -408,7 +408,7 @@ PHP_FUNCTION(gsl_complex_mul_imag)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_mul_imag(complex_z, y));
 }
 /* }}} */
@@ -427,7 +427,7 @@ PHP_FUNCTION(gsl_complex_div_imag)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_div_imag(complex_z, y));
 }
 /* }}} */
@@ -444,7 +444,7 @@ PHP_FUNCTION(gsl_complex_conjugate)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_conjugate(complex_z));
 }
 /* }}} */
@@ -461,7 +461,7 @@ PHP_FUNCTION(gsl_complex_inverse)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_inverse(complex_z));
 }
 /* }}} */
@@ -478,7 +478,7 @@ PHP_FUNCTION(gsl_complex_negative)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_negative(complex_z));
 }
 /* }}} */
@@ -495,7 +495,7 @@ PHP_FUNCTION(gsl_complex_sqrt)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_sqrt(complex_z));
 }
 /* }}} */
@@ -509,7 +509,7 @@ PHP_FUNCTION(gsl_complex_sqrt_real)
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_DOUBLE(x)
 	ZEND_PARSE_PARAMETERS_END();
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_sqrt_real(x));
 }
 /* }}} */
@@ -528,7 +528,7 @@ PHP_FUNCTION(gsl_complex_pow)
 
 	complex_a = gslphp_get_zval_complex(a);
 	complex_b = gslphp_get_zval_complex(b);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_pow(complex_a, complex_b));
 }
 /* }}} */
@@ -547,7 +547,7 @@ PHP_FUNCTION(gsl_complex_pow_real)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_pow_real(complex_z, x));
 }
 /* }}} */
@@ -564,7 +564,7 @@ PHP_FUNCTION(gsl_complex_exp)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_exp(complex_z));
 }
 /* }}} */
@@ -581,7 +581,7 @@ PHP_FUNCTION(gsl_complex_log)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_log(complex_z));
 }
 /* }}} */
@@ -598,7 +598,7 @@ PHP_FUNCTION(gsl_complex_log10)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_log10(complex_z));
 }
 /* }}} */
@@ -617,7 +617,7 @@ PHP_FUNCTION(gsl_complex_log_b)
 
 	complex_a = gslphp_get_zval_complex(a);
 	complex_b = gslphp_get_zval_complex(b);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_log_b(complex_a, complex_b));
 }
 /* }}} */
@@ -634,7 +634,7 @@ PHP_FUNCTION(gsl_complex_sin)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_sin(complex_z));
 }
 /* }}} */
@@ -651,7 +651,7 @@ PHP_FUNCTION(gsl_complex_cos)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_cos(complex_z));
 }
 /* }}} */
@@ -668,7 +668,7 @@ PHP_FUNCTION(gsl_complex_tan)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_tan(complex_z));
 }
 /* }}} */
@@ -685,7 +685,7 @@ PHP_FUNCTION(gsl_complex_sec)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_sec(complex_z));
 }
 /* }}} */
@@ -702,7 +702,7 @@ PHP_FUNCTION(gsl_complex_csc)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_csc(complex_z));
 }
 /* }}} */
@@ -719,7 +719,7 @@ PHP_FUNCTION(gsl_complex_cot)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_cot(complex_z));
 }
 /* }}} */
@@ -736,7 +736,7 @@ PHP_FUNCTION(gsl_complex_arcsin)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arcsin(complex_z));
 }
 /* }}} */
@@ -750,7 +750,7 @@ PHP_FUNCTION(gsl_complex_arcsin_real)
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_DOUBLE(x)
 	ZEND_PARSE_PARAMETERS_END();
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arcsin_real(x));
 }
 /* }}} */
@@ -767,7 +767,7 @@ PHP_FUNCTION(gsl_complex_arccos)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arccos(complex_z));
 }
 /* }}} */
@@ -781,7 +781,7 @@ PHP_FUNCTION(gsl_complex_arccos_real)
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_DOUBLE(x)
 	ZEND_PARSE_PARAMETERS_END();
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arccos_real(x));
 }
 /* }}} */
@@ -798,7 +798,7 @@ PHP_FUNCTION(gsl_complex_arcsec)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arcsec(complex_z));
 }
 /* }}} */
@@ -812,7 +812,7 @@ PHP_FUNCTION(gsl_complex_arcsec_real)
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_DOUBLE(x)
 	ZEND_PARSE_PARAMETERS_END();
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arcsec_real(x));
 }
 /* }}} */
@@ -829,7 +829,7 @@ PHP_FUNCTION(gsl_complex_arccsc)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arccsc(complex_z));
 }
 /* }}} */
@@ -843,7 +843,7 @@ PHP_FUNCTION(gsl_complex_arccsc_real)
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_DOUBLE(x)
 	ZEND_PARSE_PARAMETERS_END();
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arccsc_real(x));
 }
 /* }}} */
@@ -860,7 +860,7 @@ PHP_FUNCTION(gsl_complex_arctan)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arctan(complex_z));
 }
 /* }}} */
@@ -877,7 +877,7 @@ PHP_FUNCTION(gsl_complex_arccot)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arccot(complex_z));
 }
 /* }}} */
@@ -894,7 +894,7 @@ PHP_FUNCTION(gsl_complex_sinh)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_sinh(complex_z));
 }
 /* }}} */
@@ -911,7 +911,7 @@ PHP_FUNCTION(gsl_complex_cosh)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_cosh(complex_z));
 }
 /* }}} */
@@ -928,7 +928,7 @@ PHP_FUNCTION(gsl_complex_tanh)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_tanh(complex_z));
 }
 /* }}} */
@@ -945,7 +945,7 @@ PHP_FUNCTION(gsl_complex_sech)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_sech(complex_z));
 }
 /* }}} */
@@ -962,7 +962,7 @@ PHP_FUNCTION(gsl_complex_csch)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_csch(complex_z));
 }
 /* }}} */
@@ -979,7 +979,7 @@ PHP_FUNCTION(gsl_complex_coth)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_coth(complex_z));
 }
 /* }}} */
@@ -996,7 +996,7 @@ PHP_FUNCTION(gsl_complex_arcsinh)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arcsinh(complex_z));
 }
 /* }}} */
@@ -1013,7 +1013,7 @@ PHP_FUNCTION(gsl_complex_arccosh)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arccosh(complex_z));
 }
 /* }}} */
@@ -1027,7 +1027,7 @@ PHP_FUNCTION(gsl_complex_arccosh_real)
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_DOUBLE(x)
 	ZEND_PARSE_PARAMETERS_END();
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arccosh_real(x));
 }
 /* }}} */
@@ -1044,7 +1044,7 @@ PHP_FUNCTION(gsl_complex_arctanh)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arctanh(complex_z));
 }
 /* }}} */
@@ -1058,7 +1058,7 @@ PHP_FUNCTION(gsl_complex_arctanh_real)
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_DOUBLE(x)
 	ZEND_PARSE_PARAMETERS_END();
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arctanh_real(x));
 }
 /* }}} */
@@ -1075,7 +1075,7 @@ PHP_FUNCTION(gsl_complex_arcsech)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arcsech(complex_z));
 }
 /* }}} */
@@ -1092,7 +1092,7 @@ PHP_FUNCTION(gsl_complex_arccsch)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arccsch(complex_z));
 }
 /* }}} */
@@ -1109,7 +1109,7 @@ PHP_FUNCTION(gsl_complex_arccoth)
 	ZEND_PARSE_PARAMETERS_END();
 
 	complex_z = gslphp_get_zval_complex(z);
-	
+
 	RETURN_GSL_COMPLEX(gsl_complex_arccoth(complex_z));
 }
 /* }}} */
@@ -1147,37 +1147,37 @@ static const zend_function_entry gsl_complex_functions[] = {
 	// 5.2 Complex number macros
 	PHP_FE(gsl_real,				arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_imag,				arginfo_gsl_complex_1_complex_param)
-	
+
 	// 5.3 Assigning complex numbers
 	PHP_FE(gsl_complex_rect,		arginfo_gsl_complex_2_double_param)
 	PHP_FE(gsl_complex_polar,		arginfo_gsl_complex_2_double_param)
-	
+
 	// 5.4 Properties of complex numbers
 	PHP_FE(gsl_complex_arg,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_abs,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_abs2,		arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_logabs,		arginfo_gsl_complex_1_complex_param)
-	
+
 	// 5.5 Complex arithmetic operators
 	PHP_FE(gsl_complex_add,			arginfo_gsl_complex_2_complex_param)
 	PHP_FE(gsl_complex_sub,			arginfo_gsl_complex_2_complex_param)
 	PHP_FE(gsl_complex_mul,			arginfo_gsl_complex_2_complex_param)
 	PHP_FE(gsl_complex_div,			arginfo_gsl_complex_2_complex_param)
-	
+
 	PHP_FE(gsl_complex_add_real,	arginfo_gsl_complex_1_complex_1_double_param)
 	PHP_FE(gsl_complex_sub_real,	arginfo_gsl_complex_1_complex_1_double_param)
 	PHP_FE(gsl_complex_mul_real,	arginfo_gsl_complex_1_complex_1_double_param)
 	PHP_FE(gsl_complex_div_real,	arginfo_gsl_complex_1_complex_1_double_param)
-	
+
 	PHP_FE(gsl_complex_add_imag,	arginfo_gsl_complex_1_complex_1_double_param)
 	PHP_FE(gsl_complex_sub_imag,	arginfo_gsl_complex_1_complex_1_double_param)
 	PHP_FE(gsl_complex_mul_imag,	arginfo_gsl_complex_1_complex_1_double_param)
 	PHP_FE(gsl_complex_div_imag,	arginfo_gsl_complex_1_complex_1_double_param)
-	
+
 	PHP_FE(gsl_complex_conjugate,	arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_inverse,		arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_negative,	arginfo_gsl_complex_1_complex_param)
-	
+
 	// 5.6 Elementary Complex Functions
 	PHP_FE(gsl_complex_sqrt,		arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_sqrt_real,	arginfo_gsl_complex_1_double_param)
@@ -1187,7 +1187,7 @@ static const zend_function_entry gsl_complex_functions[] = {
 	PHP_FE(gsl_complex_log,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_log10,		arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_log_b,		arginfo_gsl_complex_2_complex_param)
-	
+
 	// 5.7 Complex Trigonometric Functions
 	PHP_FE(gsl_complex_sin,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_cos,			arginfo_gsl_complex_1_complex_param)
@@ -1195,7 +1195,7 @@ static const zend_function_entry gsl_complex_functions[] = {
 	PHP_FE(gsl_complex_sec,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_csc,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_cot,			arginfo_gsl_complex_1_complex_param)
-	
+
 	// 5.8 Inverse Complex Trigonometric Functions
 	PHP_FE(gsl_complex_arcsin,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_arcsin_real,		arginfo_gsl_complex_1_double_param)
@@ -1207,7 +1207,7 @@ static const zend_function_entry gsl_complex_functions[] = {
 	PHP_FE(gsl_complex_arccsc_real,		arginfo_gsl_complex_1_double_param)
 	PHP_FE(gsl_complex_arctan,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_arccot,			arginfo_gsl_complex_1_complex_param)
-	
+
 	// 5.9 Complex Hyperbolic Functions
 	PHP_FE(gsl_complex_sinh,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_cosh,			arginfo_gsl_complex_1_complex_param)
@@ -1215,7 +1215,7 @@ static const zend_function_entry gsl_complex_functions[] = {
 	PHP_FE(gsl_complex_sech,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_csch,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_coth,			arginfo_gsl_complex_1_complex_param)
-	
+
 	// 5.10 Inverse Complex Hyperbolic Functions
 	PHP_FE(gsl_complex_arcsinh,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_arccosh,			arginfo_gsl_complex_1_complex_param)
@@ -1224,7 +1224,7 @@ static const zend_function_entry gsl_complex_functions[] = {
 	PHP_FE(gsl_complex_arctanh_real,	arginfo_gsl_complex_1_double_param)
 	PHP_FE(gsl_complex_arcsech,			arginfo_gsl_complex_1_complex_param)
 	PHP_FE(gsl_complex_arccsch,			arginfo_gsl_complex_1_complex_param)
-	PHP_FE(gsl_complex_arccoth,			arginfo_gsl_complex_1_complex_param)	
+	PHP_FE(gsl_complex_arccoth,			arginfo_gsl_complex_1_complex_param)
 
 	PHP_FE_END
 };
@@ -1234,7 +1234,7 @@ static const zend_function_entry gsl_complex_functions[] = {
  */
 PHP_RINIT_FUNCTION(gsl_complex)
 {
-#if defined(ZTS) && defined(COMPILE_DL_GSL)
+#if defined(ZTS) && defined(COMPILE_DL_GSL_COMPLEX)
 	ZEND_TSRMLS_CACHE_UPDATE();
 #endif
 
@@ -1252,7 +1252,7 @@ PHP_MINFO_FUNCTION(gsl_complex)
 }
 /* }}} */
 
-/* {{{ gsl_module_entry
+/* {{{ gsl_complex_module_entry
  */
 zend_module_entry gsl_complex_module_entry = {
 	STANDARD_MODULE_HEADER,
@@ -1268,7 +1268,7 @@ zend_module_entry gsl_complex_module_entry = {
 };
 /* }}} */
 
-#ifdef COMPILE_DL_GSL
+#ifdef COMPILE_DL_GSL_COMPLEX
 # ifdef ZTS
 ZEND_TSRMLS_CACHE_DEFINE()
 # endif
