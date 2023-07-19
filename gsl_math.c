@@ -4,7 +4,7 @@
 
 #include "php.h"
 #include "ext/standard/info.h"
-#include "php_gsl.h"
+#include "php_gsl_math.h"
 
 #include <gsl/gsl_math.h>
 
@@ -408,9 +408,9 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_gsl_fcmp, 0, 0, 3)
 ZEND_END_ARG_INFO()
 /* }}} */
 
-/* {{{ gsl_functions[]
+/* {{{ gsl_math_functions[]
  */
-static const zend_function_entry gsl_functions[] = {
+static const zend_function_entry gsl_math_functions[] = {
 	PHP_FE(gsl_isnan,		arginfo_gsl_isnan)
 	PHP_FE(gsl_isinf,		arginfo_gsl_isinf)
 	PHP_FE(gsl_finite,		arginfo_gsl_finite)
@@ -439,7 +439,7 @@ static const zend_function_entry gsl_functions[] = {
 
 /* {{{ PHP_RINIT_FUNCTION
  */
-PHP_RINIT_FUNCTION(gsl)
+PHP_RINIT_FUNCTION(gsl_math)
 {
 #if defined(ZTS) && defined(COMPILE_DL_GSL)
 	ZEND_TSRMLS_CACHE_UPDATE();
@@ -451,33 +451,33 @@ PHP_RINIT_FUNCTION(gsl)
 
 /* {{{ PHP_MINFO_FUNCTION
  */
-PHP_MINFO_FUNCTION(gsl)
+PHP_MINFO_FUNCTION(gsl_math)
 {
 	php_info_print_table_start();
-	php_info_print_table_header(2, "gsl support", "enabled");
+	php_info_print_table_header(2, "gsl_math support", "enabled");
 	php_info_print_table_end();
 }
 /* }}} */
 
-/* {{{ gsl_module_entry
+/* {{{ gsl_math_module_entry
  */
-zend_module_entry gsl_module_entry = {
+zend_module_entry gsl_math_module_entry = {
 	STANDARD_MODULE_HEADER,
-	"gsl",					/* Extension name */
-	gsl_functions,			/* zend_function_entry */
-	NULL,					/* PHP_MINIT - Module initialization */
-	NULL,					/* PHP_MSHUTDOWN - Module shutdown */
-	PHP_RINIT(gsl),			/* PHP_RINIT - Request initialization */
-	NULL,					/* PHP_RSHUTDOWN - Request shutdown */
-	PHP_MINFO(gsl),			/* PHP_MINFO - Module info */
-	PHP_GSL_VERSION,		/* Version */
+	"gsl_math",					/* Extension name */
+	gsl_math_functions,			/* zend_function_entry */
+	NULL,						/* PHP_MINIT - Module initialization */
+	NULL,						/* PHP_MSHUTDOWN - Module shutdown */
+	PHP_RINIT(gsl_math),		/* PHP_RINIT - Request initialization */
+	NULL,						/* PHP_RSHUTDOWN - Request shutdown */
+	PHP_MINFO(gsl_math),		/* PHP_MINFO - Module info */
+	PHP_GSL_MATH_VERSION,		/* Version */
 	STANDARD_MODULE_PROPERTIES
 };
 /* }}} */
 
-#ifdef COMPILE_DL_GSL
+#ifdef COMPILE_DL_GSL_MATH
 # ifdef ZTS
 ZEND_TSRMLS_CACHE_DEFINE()
 # endif
-ZEND_GET_MODULE(gsl)
+ZEND_GET_MODULE(gsl_math)
 #endif
