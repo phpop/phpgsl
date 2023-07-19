@@ -1,5 +1,12 @@
+/* gsl_complex extension for PHP */
+
 #ifndef PHP_GSL_COMPLEX_H
 #define PHP_GSL_COMPLEX_H
+
+extern zend_module_entry gsl_complex_module_entry;
+#define phpext_gsl_ptr &gsl_complex_module_entry
+
+#define PHP_GSL_COMPLEX_VERSION "0.0.1"
 
 PHP_FUNCTION(gsl_real);
 PHP_FUNCTION(gsl_imag);
@@ -62,5 +69,9 @@ PHP_FUNCTION(gsl_complex_arctanh_real);
 PHP_FUNCTION(gsl_complex_arcsech);
 PHP_FUNCTION(gsl_complex_arccsch);
 PHP_FUNCTION(gsl_complex_arccoth);
+
+# if defined(ZTS) && defined(COMPILE_DL_GSL)
+ZEND_TSRMLS_CACHE_EXTERN()
+# endif
 
 #endif	/* PHP_GSL_COMPLEX_H */
