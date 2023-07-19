@@ -7,6 +7,7 @@
 #include "php_gsl_complex.h"
 
 #include <gsl/gsl_complex.h>
+#include <gsl/gsl_complex_math.h>
 
 /* For compatibility with older PHP versions */
 #ifndef ZEND_PARSE_PARAMETERS_NONE
@@ -66,7 +67,7 @@ static gsl_complex gslphp_get_zval_complex(zval *z) {
 		}
 	}
 
-	GSL_SET_COMPLEX(&val, x, y) // устанавливаем значение в комлексное число
+	GSL_SET_COMPLEX(&val, x, y); // устанавливаем значение в комлексное число
 
 	return val;
 }
