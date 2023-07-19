@@ -1,0 +1,7 @@
+ARG_ENABLE('gsl', 'gsl support', 'no');
+
+if (PHP_GSL != 'no') {
+	AC_DEFINE('HAVE_GSL', 1, 'gsl support enabled');
+
+	EXTENSION('gsl', 'gsl_complex.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+}

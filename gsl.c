@@ -465,10 +465,10 @@ zend_module_entry gsl_module_entry = {
 	STANDARD_MODULE_HEADER,
 	"gsl",					/* Extension name */
 	gsl_functions,			/* zend_function_entry */
-	NULL,							/* PHP_MINIT - Module initialization */
-	NULL,							/* PHP_MSHUTDOWN - Module shutdown */
+	NULL,					/* PHP_MINIT - Module initialization */
+	NULL,					/* PHP_MSHUTDOWN - Module shutdown */
 	PHP_RINIT(gsl),			/* PHP_RINIT - Request initialization */
-	NULL,							/* PHP_RSHUTDOWN - Request shutdown */
+	NULL,					/* PHP_RSHUTDOWN - Request shutdown */
 	PHP_MINFO(gsl),			/* PHP_MINFO - Module info */
 	PHP_GSL_VERSION,		/* Version */
 	STANDARD_MODULE_PROPERTIES

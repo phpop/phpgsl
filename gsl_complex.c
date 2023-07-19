@@ -4,8 +4,7 @@
 
 #include "php.h"
 #include "ext/standard/info.h"
-#include "php_gsl.h"
-#include "gsl_complex.h"
+#include "php_gsl_complex.h"
 
 #include <gsl/gsl_complex.h>
 
@@ -18,9 +17,12 @@
 
 // Создает массив из 2-х элементов, первый из которых - действит. часть, второй - мнимая часть комплексного числа
 #define RETVAL_GSL_COMPLEX(z) do { 	\
+	zval *real, *imag;				\
 	array_init_size(return_value, 2); 	\
-	zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), GSL_REAL(z));	\
-	zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), GSL_IMAG(z));	\
+	ZVAL_DOUBLE(real, GSL_REAL(z));		\
+	ZVAL_DOUBLE(imag, GSL_IMAG(z));		\
+	zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), real);	\
+	zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), imag);	\
 } while (0)
 	
 #define RETURN_GSL_COMPLEX(z) RETVAL_GSL_COMPLEX(z); return
@@ -30,15 +32,38 @@ static gsl_complex gslphp_get_zval_complex(zval *z) {
 	gsl_complex val;
 	double x = 0.0, y = 0.0;
 	zval *zp;
+	zend_array *zarr;
 	
-	zp = zend_hash_index_find(z, 0); // нулевой элемент - действительная часть
+	zarr = Z_ARRVAL_P(z);
+	
+	zp = zend_hash_index_find(zarr, 0); // нулевой элемент - действительная часть
 	if (zp != NULL) {
-		x = ZVAL_DOUBLE(zp);
+		// Если есть нулевой элемент то приводим его к double
+		switch (Z_TYPE_INFO_P(zp)) {
+			case IS_DOUBLE: 
+				x = Z_DVAL_P(zp);
+				break;
+			case IS_LONG: 
+				x = (double)Z_LVAL_P(zp);
+				break;
+			default:
+				x = 0.0;
+		}
 	}
 	
-	zp = zend_hash_index_find(z, 1); // первый элемент - мнимая часть
+	zp = zend_hash_index_find(zarr, 1); // первый элемент - мнимая часть
 	if (zp != NULL) {
-		y = ZVAL_DOUBLE(zp);
+		// Если есть первый элемент то приводим его к double
+		switch (Z_TYPE_INFO_P(zp)) {
+			case IS_DOUBLE: 
+				y = Z_DVAL_P(zp);
+				break;
+			case IS_LONG: 
+				y = (double)Z_LVAL_P(zp);
+				break;
+			default:
+				y = 0.0;
+		}
 	}
 
 	GSL_SET_COMPLEX(&val, x, y) // устанавливаем значение в комлексное число
@@ -1203,3 +1228,48 @@ static const zend_function_entry gsl_complex_functions[] = {
 	PHP_FE_END
 };
 /* }}} */
+
+/* {{{ PHP_RINIT_FUNCTION
+ */
+PHP_RINIT_FUNCTION(gsl_complex)
+{
+#if defined(ZTS) && defined(COMPILE_DL_GSL)
+	ZEND_TSRMLS_CACHE_UPDATE();
+#endif
+
+	return SUCCESS;
+}
+/* }}} */
+
+/* {{{ PHP_MINFO_FUNCTION
+ */
+PHP_MINFO_FUNCTION(gsl_complex)
+{
+	php_info_print_table_start();
+	php_info_print_table_header(2, "gsl_complex support", "enabled");
+	php_info_print_table_end();
+}
+/* }}} */
+
+/* {{{ gsl_module_entry
+ */
+zend_module_entry gsl_complex_module_entry = {
+	STANDARD_MODULE_HEADER,
+	"gsl_complex",					/* Extension name */
+	gsl_complex_functions,			/* zend_function_entry */
+	NULL,							/* PHP_MINIT - Module initialization */
+	NULL,							/* PHP_MSHUTDOWN - Module shutdown */
+	PHP_RINIT(gsl_complex),			/* PHP_RINIT - Request initialization */
+	NULL,							/* PHP_RSHUTDOWN - Request shutdown */
+	PHP_MINFO(gsl_complex),			/* PHP_MINFO - Module info */
+	PHP_GSL_COMPLEX_VERSION,		/* Version */
+	STANDARD_MODULE_PROPERTIES
+};
+/* }}} */
+
+#ifdef COMPILE_DL_GSL
+# ifdef ZTS
+ZEND_TSRMLS_CACHE_DEFINE()
+# endif
+ZEND_GET_MODULE(gsl_complex)
+#endif
