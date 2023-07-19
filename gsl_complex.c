@@ -74,7 +74,7 @@ static gsl_complex gslphp_get_zval_complex(zval *z) {
 
 /* {{{ double gsl_real(gsl_complex z)
  */
-PHP_FUNCTION(gsl_real)
+PHP_FUNCTION(gsl_complex_real)
 {
 	zval *z;
 	gsl_complex val;
@@ -91,7 +91,7 @@ PHP_FUNCTION(gsl_real)
 
 /* {{{ double gsl_imag(gsl_complex z)
  */
-PHP_FUNCTION(gsl_imag)
+PHP_FUNCTION(gsl_complex_imag)
 {
 	zval *z;
 	gsl_complex val;
@@ -1145,8 +1145,8 @@ ZEND_END_ARG_INFO()
  */
 static const zend_function_entry gsl_complex_functions[] = {
 	// 5.2 Complex number macros
-	PHP_FE(gsl_real,				arginfo_gsl_complex_1_complex_param)
-	PHP_FE(gsl_imag,				arginfo_gsl_complex_1_complex_param)
+	PHP_FE(gsl_complex_real,			arginfo_gsl_complex_1_complex_param)
+	PHP_FE(gsl_complex_imag,			arginfo_gsl_complex_1_complex_param)
 
 	// 5.3 Assigning complex numbers
 	PHP_FE(gsl_complex_rect,		arginfo_gsl_complex_2_double_param)
