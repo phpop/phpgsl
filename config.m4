@@ -1,94 +1,40 @@
-dnl config.m4 for extension gsl
-
-dnl Comments in this file start with the string 'dnl'.
-dnl Remove where necessary.
-
-dnl If your extension references something external, use 'with':
-
-dnl PHP_ARG_WITH([gsl],
-dnl   [for gsl support],
-dnl   [AS_HELP_STRING([--with-gsl],
-dnl     [Include gsl support])])
-
-dnl Otherwise use 'enable':
-
-PHP_ARG_ENABLE([gsl],
-  [whether to enable gsl support],
-  [AS_HELP_STRING([--enable-gsl],
-    [Enable gsl support])],
-  [no])
+PHP_ARG_WITH([gsl],
+  [for GSL support],
+  [AS_HELP_STRING([[--with-gsl[=DIR]]],
+    [Include GSL support])])
 
 if test "$PHP_GSL" != "no"; then
-  dnl Write more examples of tests here...
+  if test -r $PHP_GSL/include/gsl_math.h; then
+    GSL_DIR=$PHP_GSL
+  else
+    AC_MSG_CHECKING(for GSL in default path)
+    for i in /usr/local /usr; do
+      if test -r $i/include/gsl/gsl_math.h; then
+        GSL_DIR=$i
+        AC_MSG_RESULT(found in $i)
+        break
+      fi
+    done
+  fi
 
-  dnl Remove this code block if the library does not support pkg-config.
-  dnl PKG_CHECK_MODULES([LIBFOO], [foo])
-  dnl PHP_EVAL_INCLINE($LIBFOO_CFLAGS)
-  dnl PHP_EVAL_LIBLINE($LIBFOO_LIBS, GSL_SHARED_LIBADD)
+  if test -z "$GSL_DIR"; then
+    AC_MSG_RESULT(not found)
+    AC_MSG_ERROR(Please reinstall the GSL distribution)
+  fi
 
-  dnl If you need to check for a particular library version using PKG_CHECK_MODULES,
-  dnl you can use comparison operators. For example:
-  dnl PKG_CHECK_MODULES([LIBFOO], [foo >= 1.2.3])
-  dnl PKG_CHECK_MODULES([LIBFOO], [foo < 3.4])
-  dnl PKG_CHECK_MODULES([LIBFOO], [foo = 1.2.3])
+  LDFLAGS="$LDFLAGS -L$GSL_DIR/$PHP_LIBDIR/x86_64-linux-gnu -lgsl -lgslcblas -lm"
 
-  dnl Remove this code block if the library supports pkg-config.
-  dnl --with-gsl -> check with-path
-  dnl SEARCH_PATH="/usr/local /usr"     # you might want to change this
-  dnl SEARCH_FOR="/include/gsl.h"  # you most likely want to change this
-  dnl if test -r $PHP_GSL/$SEARCH_FOR; then # path given as parameter
-  dnl   GSL_DIR=$PHP_GSL
-  dnl else # search default path list
-  dnl   AC_MSG_CHECKING([for gsl files in default path])
-  dnl   for i in $SEARCH_PATH ; do
-  dnl     if test -r $i/$SEARCH_FOR; then
-  dnl       GSL_DIR=$i
-  dnl       AC_MSG_RESULT(found in $i)
-  dnl     fi
-  dnl   done
-  dnl fi
-  dnl
-  dnl if test -z "$GSL_DIR"; then
-  dnl   AC_MSG_RESULT([not found])
-  dnl   AC_MSG_ERROR([Please reinstall the gsl distribution])
-  dnl fi
+  PHP_CHECK_LIBRARY(gsl, gsl,
+  [
+    PHP_ADD_INCLUDE($GSL_DIR/include)
+    PHP_ADD_LIBRARY_WITH_PATH(gsl, $GSL_DIR/$PHP_LIBDIR, GSL_SHARED_LIBADD)
+    AC_DEFINE(HAVE_GSL,1,[ ])
+  ],
+  [],
+  [
+    -$LDFLAGS
+  ])
 
-  dnl Remove this code block if the library supports pkg-config.
-  dnl --with-gsl -> add include path
-  dnl PHP_ADD_INCLUDE($GSL_DIR/include)
-
-  dnl Remove this code block if the library supports pkg-config.
-  dnl --with-gsl -> check for lib and symbol presence
-  dnl LIBNAME=GSL # you may want to change this
-  dnl LIBSYMBOL=GSL # you most likely want to change this
-
-  dnl If you need to check for a particular library function (e.g. a conditional
-  dnl or version-dependent feature) and you are using pkg-config:
-  dnl PHP_CHECK_LIBRARY($LIBNAME, $LIBSYMBOL,
-  dnl [
-  dnl   AC_DEFINE(HAVE_GSL_FEATURE, 1, [ ])
-  dnl ],[
-  dnl   AC_MSG_ERROR([FEATURE not supported by your gsl library.])
-  dnl ], [
-  dnl   $LIBFOO_LIBS
-  dnl ])
-
-  dnl If you need to check for a particular library function (e.g. a conditional
-  dnl or version-dependent feature) and you are not using pkg-config:
-  dnl PHP_CHECK_LIBRARY($LIBNAME, $LIBSYMBOL,
-  dnl [
-  dnl   PHP_ADD_LIBRARY_WITH_PATH($LIBNAME, $GSL_DIR/$PHP_LIBDIR, GSL_SHARED_LIBADD)
-  dnl   AC_DEFINE(HAVE_GSL_FEATURE, 1, [ ])
-  dnl ],[
-  dnl   AC_MSG_ERROR([FEATURE not supported by your gsl library.])
-  dnl ],[
-  dnl   -L$GSL_DIR/$PHP_LIBDIR -lm
-  dnl ])
-  dnl
-  dnl PHP_SUBST(GSL_SHARED_LIBADD)
-
-  dnl In case of no dependencies
-  AC_DEFINE(HAVE_GSL, 1, [ Have gsl support ])
-
-  PHP_NEW_EXTENSION(gsl, gsl_complex.c, $ext_shared)
+  PHP_NEW_EXTENSION(gsl, gsl.c, $ext_shared)
+  PHP_SUBST(GSL_SHARED_LIBADD)
 fi
