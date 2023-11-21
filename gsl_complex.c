@@ -18,12 +18,12 @@
 
 // Создает массив из 2-х элементов, первый из которых - действит. часть, второй - мнимая часть комплексного числа
 #define RETVAL_GSL_COMPLEX(z) do { 	\
-	zval *real, *imag;				\
+	zval real, imag;				\
 	array_init_size(return_value, 2); 	\
 	ZVAL_DOUBLE(real, GSL_REAL(z));		\
 	ZVAL_DOUBLE(imag, GSL_IMAG(z));		\
-	zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), real);	\
-	zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), imag);	\
+	zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), &real);	\
+	zend_hash_next_index_insert_new(Z_ARRVAL_P(return_value), &imag);	\
 } while (0)
 
 #define RETURN_GSL_COMPLEX(z) RETVAL_GSL_COMPLEX(z); return
