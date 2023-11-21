@@ -98,4 +98,4 @@ PHP_FUNCTION(gsl_complex_arccoth);
 ZEND_TSRMLS_CACHE_EXTERN()
 # endif
 
-#endif	/* PHP_GSL_H */
+#endif    /* PHP_GSL_H */
