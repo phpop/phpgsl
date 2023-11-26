@@ -10,6 +10,7 @@
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
+#include <gsl/gsl_poly.h>
 
 /* For compatibility with older PHP versions */
 #ifndef ZEND_PARSE_PARAMETERS_NONE
@@ -20,6 +21,7 @@
 
 #include "gsl_math.c"
 #include "gsl_complex.c"
+#include "gsl_poly.c"
 
 /* {{{ gsl_functions[]
  */
@@ -129,6 +131,10 @@ static const zend_function_entry gsl_functions[] = {
     PHP_FE(gsl_complex_arcsech,			arginfo_gsl_complex_1_complex_param)
     PHP_FE(gsl_complex_arccsch,			arginfo_gsl_complex_1_complex_param)
     PHP_FE(gsl_complex_arccoth,			arginfo_gsl_complex_1_complex_param)
+
+    // polynomials
+    PHP_FE(gsl_poly_eval,			arginfo_gsl_poly_eval)
+    PHP_FE(gsl_poly_complex_eval,	arginfo_gsl_poly_complex_eval)
 
     PHP_FE_END
 };

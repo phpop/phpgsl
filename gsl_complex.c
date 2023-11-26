@@ -1,3 +1,5 @@
+#ifndef PHP_GSL_COMPLEX_C
+#define PHP_GSL_COMPLEX_C
 
 // Создает массив из 2-х элементов, первый из которых - действит. часть, второй - мнимая часть комплексного числа
 #define RETVAL_GSL_COMPLEX(z) do { 	\
@@ -1124,3 +1126,5 @@ ZEND_ARG_INFO(0, x)
 ZEND_END_ARG_INFO()
 
 /* }}} */
+
+#endif    /* PHP_GSL_COMPLEX_C */

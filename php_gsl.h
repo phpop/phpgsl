@@ -93,6 +93,9 @@ PHP_FUNCTION(gsl_complex_arctanh_real);
 PHP_FUNCTION(gsl_complex_arcsech);
 PHP_FUNCTION(gsl_complex_arccsch);
 PHP_FUNCTION(gsl_complex_arccoth);
+// Polynomials
+PHP_FUNCTION(gsl_poly_eval);
+PHP_FUNCTION(gsl_poly_complex_eval);
 
 # if defined(ZTS) && defined(COMPILE_DL_GSL)
 ZEND_TSRMLS_CACHE_EXTERN()

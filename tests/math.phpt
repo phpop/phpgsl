@@ -1,5 +1,5 @@
 --TEST--
-gsl_pow_2() GSL square test
+GSL math test
 --SKIPIF--
 <?php
 if (!extension_loaded('gsl')) {
