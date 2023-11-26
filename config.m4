@@ -22,7 +22,7 @@ if test "$PHP_GSL" != "no"; then
     AC_MSG_ERROR(Please reinstall the GSL distribution)
   fi
 
-  LDFLAGS="$LDFLAGS -L$GSL_DIR/$PHP_LIBDIR/x86_64-linux-gnu -lgsl -lgslcblas -lm"
+  LDFLAGS="$LDFLAGS `gsl-config --libs`"
 
   PHP_CHECK_LIBRARY(gsl, gsl,
   [

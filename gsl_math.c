@@ -1,3 +1,5 @@
+#ifndef PHP_GSL_MATH_C
+#define PHP_GSL_MATH_C
 
 /* {{{ int gsl_isnan(const double x)
  */
@@ -388,3 +390,5 @@ ZEND_ARG_INFO(0, y)
 ZEND_ARG_INFO(0, eps)
 ZEND_END_ARG_INFO()
 /* }}} */
+
+#endif    /* PHP_GSL_MATH_C */
