@@ -96,6 +96,15 @@ PHP_FUNCTION(gsl_complex_arccoth);
 // Polynomials
 PHP_FUNCTION(gsl_poly_eval);
 PHP_FUNCTION(gsl_poly_complex_eval);
+PHP_FUNCTION(gsl_poly_solve_quadratic);
+PHP_FUNCTION(gsl_poly_complex_solve_quadratic);
+PHP_FUNCTION(gsl_poly_solve_cubic);
+PHP_FUNCTION(gsl_poly_complex_solve_cubic);
+PHP_FUNCTION(gsl_poly_complex_workspace_alloc);
+PHP_FUNCTION(gsl_poly_complex_workspace_free);
+PHP_FUNCTION(gsl_poly_complex_solve);
+PHP_FUNCTION(gsl_poly_dd_init);
+PHP_FUNCTION(gsl_poly_dd_eval);
 
 # if defined(ZTS) && defined(COMPILE_DL_GSL)
 ZEND_TSRMLS_CACHE_EXTERN()

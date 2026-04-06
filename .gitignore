@@ -1,36 +1,32 @@
-.idea
-*.lo
-*.la
-.libs
-acinclude.m4
-aclocal.m4
-autom4te.cache
-build
-config.guess
-config.h
-config.h.in
-config.log
-config.nice
-config.status
-config.sub
-configure
-configure.ac
-configure.in
-include
-install-sh
-libtool
-ltmain.sh
-Makefile
-Makefile.fragments
-Makefile.global
-Makefile.objects
-missing
-mkinstalldirs
-modules
-run-tests.php
-tests/*/*.diff
-tests/*/*.out
-tests/*/*.php
-tests/*/*.exp
-tests/*/*.log
-tests/*/*.sh
+```
+# Compiled and build artifacts
+*.o
+*.obj
+*.dep
+build/
+dist/
+
+# Dependencies
+vendor/
+.libs/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Backup files
+*~
+\#*\#
+```

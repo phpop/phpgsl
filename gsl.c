@@ -135,6 +135,15 @@ static const zend_function_entry gsl_functions[] = {
     // polynomials
     PHP_FE(gsl_poly_eval,			arginfo_gsl_poly_eval)
     PHP_FE(gsl_poly_complex_eval,	arginfo_gsl_poly_complex_eval)
+    PHP_FE(gsl_poly_solve_quadratic, arginfo_gsl_poly_solve_quadratic)
+    PHP_FE(gsl_poly_complex_solve_quadratic, arginfo_gsl_poly_complex_solve_quadratic)
+    PHP_FE(gsl_poly_solve_cubic, arginfo_gsl_poly_solve_cubic)
+    PHP_FE(gsl_poly_complex_solve_cubic, arginfo_gsl_poly_complex_solve_cubic)
+    PHP_FE(gsl_poly_complex_workspace_alloc, arginfo_gsl_poly_complex_workspace_alloc)
+    PHP_FE(gsl_poly_complex_workspace_free, arginfo_gsl_poly_complex_workspace_free)
+    PHP_FE(gsl_poly_complex_solve, arginfo_gsl_poly_complex_solve)
+    PHP_FE(gsl_poly_dd_init, arginfo_gsl_poly_dd_init)
+    PHP_FE(gsl_poly_dd_eval, arginfo_gsl_poly_dd_eval)
 
     PHP_FE_END
 };
